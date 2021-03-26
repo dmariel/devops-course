@@ -31,7 +31,7 @@ jobs:
           update_existing: true
           id: issue
   add_comment:
-      steps: 
+   
         - name: Create comment
           uses: peter-evans/create-or-update-comment@v1
           with:
