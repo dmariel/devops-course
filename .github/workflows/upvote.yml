@@ -20,13 +20,13 @@ jobs:
             title: Upvote projects - Course Automation
         - name: Create Issue    
           if: steps.check_if_issue_exists.outputs.exists == 'false'
-            uses: JasonEtco/create-an-issue@v2
+            uses: JasonEtco/create-an-issue@master
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             id: issue
           if: steps.check_if_issue_exists.outputs.exists == 'true'
           - uses: actions/checkout@v2
-          - uses: JasonEtco/create-an-issue@v2
+          - uses: JasonEtco/create-an-issue@master
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             update_existing: true
