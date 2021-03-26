@@ -1,0 +1,18 @@
+name: Upvote
+
+on:
+  pull_request: 
+    types:[labeled]
+
+jobs:
+  test:
+    build:
+      if: ${{ github.event.label.name == 'Upvote - Course Automation' && if github.ref == 'refs/heads/2021' }}
+      runs-on: ubuntu-latest
+      name: Create an issue
+      steps:
+        - uses: actions/checkout@v2
+        - uses: JasonEtco/create-an-issue@v2
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - run: npm ci
