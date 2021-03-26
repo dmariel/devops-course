@@ -7,7 +7,7 @@ on:
 jobs:
   new_issue:
     
-      if: ${{ github.event.label.name == 'Upvote - Course Automation' && github.ref == 'refs/heads/2021' }}
+      if: ${{ github.event.label.name == 'Upvote - Course Automation' && github.ref == 'refs/heads/course-automation' }}
       runs-on: ubuntu-latest
       name: Create an issue if none exist
       steps:
