@@ -2,7 +2,7 @@ name: Upvote
 
 on:
   pull_request: 
-    types:[labeled]
+    types: [labeled]
 
 jobs:
   new_issue:
