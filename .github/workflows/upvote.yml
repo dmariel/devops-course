@@ -5,14 +5,40 @@ on:
     types:[labeled]
 
 jobs:
-  test:
+  new_issue:
     build:
       if: ${{ github.event.label.name == 'Upvote - Course Automation' && if github.ref == 'refs/heads/2021' }}
       runs-on: ubuntu-latest
-      name: Create an issue
+      name: Create an issue if none exist
       steps:
-        - uses: actions/checkout@v2
-        - uses: JasonEtco/create-an-issue@v2
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        - run: npm ci
+        - uses: nickderobertis/check-if-issue-exists-action@master
+          name: Check if Issue Exists
+          id: check_if_issue_exists
+          with:
+            repo: dmariel/devops-course
+            token: ${{ secrets.GITHUB_TOKEN }}
+            title: Upvote projects - Course Automation
+        - name: Create Issue
+          if: steps.check_if_issue_exists.outputs.exists == 'false'
+          - uses: actions/checkout@v2
+          - uses: JasonEtco/create-an-issue@v2
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            id: issue
+          if: steps.check_if_issue_exists.outputs.exists == 'true'
+          - uses: actions/checkout@v2
+          - uses: JasonEtco/create-an-issue@v2
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            update_existing: true
+            id: issue
+    add_comment:
+        - name: Create comment
+          uses: peter-evans/create-or-update-comment@v1
+          with:
+            issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
+            body: |
+              ${{ github.event.pull_request.title }}
+              ${{ github.event.path }}
+
+
