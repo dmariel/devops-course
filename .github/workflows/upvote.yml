@@ -29,12 +29,10 @@ jobs:
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           id: issue
-  add_comment:
-      steps: 
         - name: Create comment
           uses: peter-evans/create-or-update-comment@v1
           with:
-            issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
+            issue-number: ${{ new_issue.steps.issue.outputs.number}}
             body: |
               ${{ github.event.pull_request.title }}
               ${{ github.event.path }}
