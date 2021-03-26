@@ -18,7 +18,6 @@ jobs:
             repo: dmariel/devops-course
             token: ${{ secrets.GITHUB_TOKEN }}
             title: Upvote projects - Course Automation
-        - name: Create Issue
           if: steps.check_if_issue_exists.outputs.exists == 'false'
           - uses: actions/checkout@v2
           - uses: JasonEtco/create-an-issue@v2
