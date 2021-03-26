@@ -31,12 +31,13 @@ jobs:
           update_existing: true
           id: issue
   add_comment:
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
-          body: |
-            ${{ github.event.pull_request.title }}
-            ${{ github.event.path }}
+      steps: 
+        - name: Create comment
+          uses: peter-evans/create-or-update-comment@v1
+          with:
+            issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
+            body: |
+              ${{ github.event.pull_request.title }}
+              ${{ github.event.path }}
 
 
