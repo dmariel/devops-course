@@ -6,7 +6,7 @@ on:
 
 jobs:
   new_issue:
-    build:
+    
       if: ${{ github.event.label.name == 'Upvote - Course Automation' && if github.ref == 'refs/heads/2021' }}
       runs-on: ubuntu-latest
       name: Create an issue if none exist
@@ -31,13 +31,13 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             update_existing: true
             id: issue
-    add_comment:
-        - name: Create comment
-          uses: peter-evans/create-or-update-comment@v1
-          with:
-            issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
-            body: |
-              ${{ github.event.pull_request.title }}
-              ${{ github.event.path }}
+  add_comment:
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ new_issue.build.steps.issue.outputs.number}}
+          body: |
+            ${{ github.event.pull_request.title }}
+            ${{ github.event.path }}
 
 
