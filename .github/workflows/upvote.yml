@@ -98,6 +98,7 @@ jobs:
               b=$(echo $t | cut -d':' -f1)
               c=$(echo $t | cut -d':' -f3)
               d=$(echo $t | cut -d':' -f4)
+              echo ${b} ${c} ${d} ${a}
               e=" | [${d}](https://github.com/${{ github.repository }}/issues/${{  needs.new_issue.outputs.output1}}#issuecomment-${b})"
               echo ${a} ${e}  >> result.txt
             fi
