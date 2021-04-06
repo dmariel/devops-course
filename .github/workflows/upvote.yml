@@ -43,7 +43,7 @@ jobs:
   first_comment:
     needs: new_issue
     # The "Top-list" is created if there is no first comment
-    if: ${{needs.new_issue.outputs.output2 == 0 && && github.event.label.name == 'Upvote - Course Automation'  
+    if: needs.new_issue.outputs.output2 == 0 && github.event.label.name == 'Upvote - Course Automation'  
     runs-on: ubuntu-latest
     name: Create first comment
     steps:
