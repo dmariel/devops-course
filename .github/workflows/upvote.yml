@@ -7,7 +7,7 @@ on:
   pull_request_target: 
     types: [labeled]
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '9 * * * *'
 jobs:
   
   # First job: Triggered on a PR labeled with 'Upvote - Course Automation' to the repository listed on line 16
