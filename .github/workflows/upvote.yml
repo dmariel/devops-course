@@ -106,7 +106,7 @@ jobs:
           done < output.txt
           # Sorts the "Top-list"-table in descending order and insert to textfile
           sort -k1,1nr -k2,2 result.txt >> resultSorted.txt
-          sed -i '/\|\s\[\]/d' resultSorted.txt >> final.txt
+          sed -i '/\[\]/d' resultSorted.txt >> final.txt
         
         # Reads result from textfile
       - name: Read result
