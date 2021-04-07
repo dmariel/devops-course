@@ -79,7 +79,7 @@ jobs:
   # Fourth job: Scheduled to run        
   update_comment:
     needs: new_issue
-    #if: ${{github.event_name == 'schedule'}}
+    if: ${{github.event_name == 'schedule'}}
     runs-on: ubuntu-latest
     # Updates the table with information that is accquired by looping through the comments and listing the comments with 1 or more upvotes
     name: Update table every 5 minutes
