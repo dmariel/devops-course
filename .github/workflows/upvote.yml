@@ -89,7 +89,7 @@ jobs:
         run: |  
           curl -s https://api.github.com/repos/${{github.repository}}/issues/${{  needs.new_issue.outputs.output1}}/comments | jq -c '.[].id' | while read id ; do
           
-              echo -e ${id}:$( curl -s -H "Accept: application/vnd.github.squirrel-girl-preview+json" https://api.github.com/repos/${{github.repository}}/issues/comments/${id}/reactions | jq 'map(select(.content=="+1"))' | jq length):title:$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{github.repository}}/issues/comments/${id} | jq '.body' | sed -n '1p' | cut -d: -f2  ) >> output.txt
+              echo -e ${id}:$( curl -s -H "Accept: application/vnd.github.squirrel-girl-preview+json" https://api.github.com/repos/${{github.repository}}/issues/comments/${id}/reactions | jq 'map(select(.content=="+1"))' | jq length):title:$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{github.repository}}/issues/comments/${id} | jq '.body' | sed -n '1p') >> output.txt
           done
       - run: | 
           while read t; do 
@@ -98,22 +98,25 @@ jobs:
             then
               b=$(echo $t | cut -d':' -f1)
               c=$(echo $t | cut -d':' -f3)
-              d=$(echo $t | cut -d':' -f4)
+              d=$(echo $t | cut -d':' -f5)
+              f=$(echo $t | cut -d':' -f4)
               echo ${b} ${c} ${d} ${a}
               e=" | [${d}](https://github.com/${{ github.repository }}/issues/${{  needs.new_issue.outputs.output1}}#issuecomment-${b})"
-              echo ${a} ${e}  >> result.txt
+              if [ ${f}="Title of pull request" ]
+              then
+                echo ${a} ${e}  >> result.txt
+              fi
             fi
           done < output.txt
           # Sorts the "Top-list"-table in descending order and insert to textfile
           sort -k1,1nr -k2,2 result.txt >> resultSorted.txt
-          sed -i '/\[\]/d' resultSorted.txt >> final.txt
         
         # Reads result from textfile
       - name: Read result
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./final.txt
+          path: ./resultSorted.txt
           
         # Updates the "Top-list with a table containing the outputs given when reading the result"
       - name: Update first comment ("Top-list")
