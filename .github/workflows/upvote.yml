@@ -10,7 +10,7 @@ on:
     - cron: '* * * * *'
 jobs:
   
-  # First job: Triggered on a PR labeled with 'Upvote - Course Automation' to the repository listed on line 16
+  # First job: Triggered on a PR to the repository listed on line 16
   new_issue:
     
     if: github.repository == 'dmariel/devops-course'
