@@ -100,8 +100,7 @@ jobs:
               c=$(echo $t | cut -d':' -f3)
               d=$(echo $t | cut -d':' -f5)
               f=$(echo $t | cut -d':' -f4)
-              echo ${b} ${c} ${d} ${a}
-              echo $f
+              echo ${b} ${c} ${d} ${a} $f
               e=" | [${d}](https://github.com/${{ github.repository }}/issues/${{  needs.new_issue.outputs.output1}}#issuecomment-${b})"
               if [[ ${f} == "Title of pull request" ]]
               then
