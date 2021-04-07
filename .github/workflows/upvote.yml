@@ -107,7 +107,7 @@ jobs:
           # Sorts the "Top-list"-table in descending order and insert to textfile
           sort -k1,1nr -k2,2 result.txt >> resultSorted.txt
 
-          sed "/\| $/d" resultSorted.txt >> final.txt
+          sed -E 's/(| )+$//' resultSorted.txt >> final.txt
 
         
         # Reads result from textfile
