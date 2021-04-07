@@ -37,7 +37,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }} 
           repository: ${{github.repository}}
           issue-number: ${{ steps.issue.outputs.number }}
-          body-includes: Toplist (updated a few times every hour)
+          body-includes: Toplist (Updated a few times every hour)
         
   # Second job: Triggered on a PR labeled with 'Upvote - Course Automation'        
   first_comment:
@@ -52,7 +52,7 @@ jobs:
         with:
           issue-number: ${{ needs.new_issue.outputs.output1 }}
           body: |
-            Toplist (updated a few times every hour)
+            Toplist (Updated a few times every hour)
 
   # Third job: Triggered on a PR labeled with 'Upvote - Course Automation'
   other_comments:
@@ -82,7 +82,7 @@ jobs:
     if: ${{github.event_name == 'schedule'}}
     runs-on: ubuntu-latest
     # Updates the table with information that is accquired by looping through the comments and listing the comments with 1 or more upvotes
-    name: Update table 
+    name: Update table every 5 minutes
     steps:
       - name: Test json echo
         id: commentid 
@@ -106,10 +106,8 @@ jobs:
           done < output.txt
           # Sorts the "Top-list"-table in descending order and insert to textfile
           sort -k1,1nr -k2,2 result.txt >> resultSorted.txt
-
           sed -r 's/(| )$//' resultSorted.txt >> final.txt
 
-        
         # Reads result from textfile
       - name: Read result
         id: package
@@ -123,7 +121,7 @@ jobs:
         with:
           comment-id: ${{ needs.new_issue.outputs.output2 }}
           body: |
-            Toplist (updated a few times every hour):
+            Toplist (Updated a few times every hour)
             Points | Title
             ------------ | -------------
             ${{ steps.package.outputs.content }}        
